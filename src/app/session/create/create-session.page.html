@@ -50,7 +50,8 @@
 
 
 <ion-footer>
-    <ion-toolbar>
+  <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+  <ion-toolbar>
       <ion-button (click)="startTitleInput()" color="primary" expand="full">タイトルを入力して登録する</ion-button>
     </ion-toolbar>
 </ion-footer>

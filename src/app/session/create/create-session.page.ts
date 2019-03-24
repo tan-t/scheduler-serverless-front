@@ -6,7 +6,6 @@ import { TypeaheadResult } from '../../common/typeahead-result';
 import { TypeaheadService } from '../../common/typeahead.service';
 import { CreateSessionService } from './create-session.service';
 import { Session } from '../session';
-import * as _ from 'lodash';
 import { TitleInputModalComponent } from './title-input-modal/title-input-modal.component';
 
 @Component({
@@ -17,7 +16,8 @@ import { TitleInputModalComponent } from './title-input-modal/title-input-modal.
 export class CreateSessionPage implements OnInit {
 
   input:string;
-  session:Session = {title:'',dtls:[]};
+  session:Session = new Session();
+  loading:boolean = false;
 
   constructor(public actionSheetController: ActionSheetController,private modalController: ModalController,private typeaheadService:TypeaheadService, private createSessionService:CreateSessionService) {}
 
@@ -53,21 +53,17 @@ export class CreateSessionPage implements OnInit {
     
     setTimeout(()=>{
       if(!_.isEmpty(elem.value)) {
+        this.loading = true;
         this.typeaheadService.typeahead(elem.value).subscribe((res)=>{
-          this.session.dtls = (<Array<TypeaheadResult>>_
-          .uniqWith(
-            this.session.dtls.concat(res),_.isEqual))
-          .sort((a,b)=>{
-            return a.value.diff(b.value);
-          });
-
+          this.session.acceptNewDtls(res);
+          this.loading = false;
         });
       }
     },5);
   }
 
   deleteItem(index:number) {
-    this.session.dtls.splice(index,1);
+    this.session.deleteDtl(index);
   }
 
   async startTitleInput() {
