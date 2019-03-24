@@ -7,6 +7,7 @@ import { TypeaheadService } from '../../common/typeahead.service';
 import { CreateSessionService } from './create-session.service';
 import { Session } from '../session';
 import { TitleInputModalComponent } from './title-input-modal/title-input-modal.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-create-session',
