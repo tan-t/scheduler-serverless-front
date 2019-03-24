@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '../../../../../node_modules/@ionic/angular';
 import { Session } from '../../session';
 import { CreateSessionService } from '../create-session.service';
@@ -12,7 +12,8 @@ export class TitleInputModalComponent implements OnInit {
 
   constructor(private createSessionService:CreateSessionService) { }
 
-  session:Session;
+  @Input()
+  session:Session = new Session();
 
   ngOnInit() {}
 
